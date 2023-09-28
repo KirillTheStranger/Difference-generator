@@ -4,7 +4,7 @@
   "type": "module",
   "description": "my second project on Hexlet",
   "main": "gendiff.js",
-  "bin" : {
+  "bin": {
     "gendiff": "gendiff.js"
   },
   "scripts": {
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^11.0.0"
+    "commander": "^11.0.0",
+    "lodash": "^4.17.21"
   }
 }
