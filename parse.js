@@ -1,0 +1,1 @@
+export const parse = (file) => JSON.parse(file);

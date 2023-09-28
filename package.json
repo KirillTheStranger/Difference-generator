@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "description": "my second project on Hexlet",
-  "main": "index.js",
+  "main": "gendiff.js",
+  "bin" : {
+    "gendiff": "gendiff.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
