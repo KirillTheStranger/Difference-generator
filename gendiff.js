@@ -59,7 +59,7 @@ program
     }, [])
 
     const resultedStr = `{\n${resultedArr.join('\n')}\n}`
-    return resultedStr;
+    console.log(resultedStr);
   });
 
 program.parse();
