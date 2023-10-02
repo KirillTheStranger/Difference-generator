@@ -16,8 +16,7 @@ program
     const keys1 = Object.keys(file1);
     const keys2 = Object.keys(file2);
 
-    const arrOfBothKeys = [...keys1, ...keys2];
-    const sortedKeys = arrOfBothKeys
+    const sortedKeys = [...keys1, ...keys2]
       .reduce((acc, key) => {
         if (!acc.includes(key)) {
           acc.push(key);
