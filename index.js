@@ -1,4 +1,4 @@
-import { parseFromPath } from './helpers.js';
+import parseFromPath from './parsers.js';
 
 const genDiff = (filepath1, filepath2) => {
   const file1 = parseFromPath(filepath1);
