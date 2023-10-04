@@ -1,4 +1,4 @@
-import getFixturePath from '../src/helpers.js';
+import { getFixturePath } from '../src/helpers.js';
 import genDiff from '../src/index.js';
 import {
   jsonResult1, jsonResult2, jsonResult3, yamlResult4, yamlResult5, yamlResult6,

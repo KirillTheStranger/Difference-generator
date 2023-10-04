@@ -1,4 +1,5 @@
 import parseFromPath from './parsers.js';
+import { addFormattedStr } from './helpers.js';
 
 const genDiff = (filepath1, filepath2) => {
   const file1 = parseFromPath(filepath1);
@@ -26,17 +27,17 @@ const genDiff = (filepath1, filepath2) => {
 
   const resultedArr = sortedKeys.reduce((acc, key) => {
     if (file1[key] === file2[key]) {
-      acc.push(`   ${key}: ${file1[key]}`);
+      addFormattedStr(acc, key, file1[key]);
     }
     if (Object.hasOwn(file1, key) && !Object.hasOwn(file2, key)) {
-      acc.push(` - ${key}: ${file1[key]}`);
+      addFormattedStr(acc, key, file1[key], '-');
     }
     if (!Object.hasOwn(file1, key) && Object.hasOwn(file2, key)) {
-      acc.push(` + ${key}: ${file2[key]}`);
+      addFormattedStr(acc, key, file2[key], '+');
     }
     if (Object.hasOwn(file1, key) && Object.hasOwn(file2, key) && file1[key] !== file2[key]) {
-      acc.push(` - ${key}: ${file1[key]}`);
-      acc.push(` + ${key}: ${file2[key]}`);
+      addFormattedStr(acc, key, file1[key], '-');
+      addFormattedStr(acc, key, file2[key], '+');
     }
     return acc;
   }, []);
