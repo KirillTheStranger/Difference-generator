@@ -1,4 +1,4 @@
-const result1 = `{
+const jsonResult1 = `{
  + another: extra line
    extra: line
  - follow: false
@@ -8,7 +8,7 @@ const result1 = `{
    timeout: 50
 }`;
 
-const result2 = `{
+const jsonResult2 = `{
  - another: extra line
  - extra: line
  - follow: true
@@ -16,8 +16,34 @@ const result2 = `{
  - timeout: 50
 }`;
 
-const result3 = `{
+const jsonResult3 = `{
 
 }`;
 
-export { result1, result2, result3 };
+const yamlResult4 = `{
+ + another: extra line
+   extra: line
+ - follow: false
+ + follow: true
+   host: gotta be same
+   proxy: 123.234.53.22
+ - timeout: 80
+ + timeout: 50
+}`;
+
+const yamlResult5 = `{
+ - another: extra line
+ - extra: line
+ - follow: true
+ - host: gotta be same
+ - proxy: 123.234.53.22
+ - timeout: 50
+}`;
+
+const yamlResult6 = `{
+
+}`;
+
+export {
+  jsonResult1, jsonResult2, jsonResult3, yamlResult4, yamlResult5, yamlResult6,
+};
