@@ -5,7 +5,7 @@ import yaml from 'js-yaml';
 const parseJson = (file) => JSON.parse(file);
 const parseYaml = (file) => yaml.load(file);
 
-const readFile = (filepath) => (fs.readFileSync(filepath, 'utf8'));
+const readFile = (filepath) => fs.readFileSync(filepath, 'utf8');
 const getFileExt = (filepath) => {
   let extention;
   if (filepath.includes('/')) {
