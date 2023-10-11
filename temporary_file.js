@@ -106,7 +106,7 @@ const buildDiffTree = (obj1, obj2) => {
   return arrOfObjects;
 };
 
-const stringify = (array, replacer = ' ', spacesCount = 1) => {
+const stringify = (array, replacer = ' ', spacesCount = 4) => {
   const iter = (arr, depth) => {
     const indentSize = depth * spacesCount;
     const currentIndent = replacer.repeat(indentSize);
@@ -114,7 +114,7 @@ const stringify = (array, replacer = ' ', spacesCount = 1) => {
 
     const result = arr.map(({ key, type, value, value1, value2, children }) => {
         if (type === 'nested') {
-          return iter(children, depth + 1);
+          return `${currentIndent}  ${key}: ${iter(children, depth + 1)}`;
         }
     
         switch (type) {
@@ -137,5 +137,5 @@ const stringify = (array, replacer = ' ', spacesCount = 1) => {
   return iter(array, 1)
 };
 
-const x = stringify(buildDiffTree(obj3, obj4));
+const x = stringify(buildDiffTree(obj1, obj2));
 console.log(x);
