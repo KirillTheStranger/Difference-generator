@@ -1,7 +1,7 @@
 {
-    "host": "gotta be same",
-    "timeout": 50,
-    "extra": "line",
-    "follow": true,
-    "another": "extra line"
+  "host": "gotta be same",
+  "timeout": 50,
+  "extra": "line",
+  "follow": true,
+  "another": "extra line"
 }
