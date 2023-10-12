@@ -22,6 +22,8 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
           return `${currentIndent}  ${key}: ${makeStrFromValue(value, depth)}`;
         case 'changed':
           return `${currentIndent}- ${key}: ${makeStrFromValue(value1, depth)}\n${currentIndent}+ ${key}: ${makeStrFromValue(value2, depth)}`;
+        default:
+          return 'Default value';
       }
     });
     return [
