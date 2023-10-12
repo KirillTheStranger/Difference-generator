@@ -106,11 +106,34 @@ const buildDiffTree = (obj1, obj2) => {
   return arrOfObjects;
 };
 
-const stringify = (array, replacer = ' ', spacesCount = 4) => {
-  const iter = (arr, depth) => {
-    const indentSize = depth * spacesCount;
+const makeStrFromValue = (value, currentDepth, replacer = ' ', spacesCount = 1) => {
+  const iter = (currentValue, depth) => {
+    if (!_.isObject(currentValue)) {
+      return `${currentValue}`;
+    }
+
+    const indentSize = currentDepth * depth * spacesCount;
     const currentIndent = replacer.repeat(indentSize);
     const bracketIndent = replacer.repeat(indentSize - spacesCount);
+    const lines = Object
+      .entries(currentValue)
+      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+
+    return [
+      '{',
+      ...lines,
+      `${bracketIndent}}`,
+    ].join('\n');
+  };
+
+  return iter(value, 1);
+};
+
+const stringify = (array, replacer = ' ', spacesCount = 4) => {
+  const iter = (arr, depth) => {
+    const indentSize = (depth * spacesCount) - 2;
+    const currentIndent = replacer.repeat(indentSize);
+    const bracketIndent = replacer.repeat(indentSize - spacesCount + 2);
 
     const result = arr.map(({ key, type, value, value1, value2, children }) => {
         if (type === 'nested') {
@@ -119,13 +142,13 @@ const stringify = (array, replacer = ' ', spacesCount = 4) => {
     
         switch (type) {
           case 'deleted':
-            return `${currentIndent}- ${key}: ${value}`;
+            return `${currentIndent}- ${key}: ${makeStrFromValue(value, depth)}`;
           case 'added':
-            return `${currentIndent}+ ${key}: ${value}`;
+            return `${currentIndent}+ ${key}: ${makeStrFromValue(value, depth)}`;
           case 'unchanged':
-            return `${currentIndent}  ${key}: ${value}`;
+            return `${currentIndent}  ${key}: ${makeStrFromValue(value, depth)}`;
           case 'changed':
-            return `${currentIndent}- ${key}: ${value1}\n${currentIndent}+ ${key}: ${value2}`;
+            return `${currentIndent}- ${key}: ${makeStrFromValue(value1, depth)}\n${currentIndent}+ ${key}: ${makeStrFromValue(value2, depth)}`;
         }   
       });
       return [
@@ -138,4 +161,5 @@ const stringify = (array, replacer = ' ', spacesCount = 4) => {
 };
 
 const x = stringify(buildDiffTree(obj1, obj2));
+
 console.log(x);
