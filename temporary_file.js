@@ -106,13 +106,13 @@ const buildDiffTree = (obj1, obj2) => {
   return arrOfObjects;
 };
 
-const makeStrFromValue = (value, currentDepth, replacer = ' ', spacesCount = 1) => {
+const makeStrFromValue = (value, currentDepth, replacer = ' ', spacesCount = 4) => {
   const iter = (currentValue, depth) => {
     if (!_.isObject(currentValue)) {
       return `${currentValue}`;
     }
 
-    const indentSize = currentDepth * depth * spacesCount;
+    const indentSize = (depth * spacesCount) + 4;
     const currentIndent = replacer.repeat(indentSize);
     const bracketIndent = replacer.repeat(indentSize - spacesCount);
     const lines = Object
@@ -126,7 +126,7 @@ const makeStrFromValue = (value, currentDepth, replacer = ' ', spacesCount = 1) 
     ].join('\n');
   };
 
-  return iter(value, 1);
+  return iter(value, currentDepth);
 };
 
 const stringify = (array, replacer = ' ', spacesCount = 4) => {
