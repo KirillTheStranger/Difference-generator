@@ -12,12 +12,12 @@ let yamlTestFile5;
 let yamlTestFile6;
 
 beforeAll(() => {
-  jsonTestFile1 = getFixturePath('test_file1.json');
-  jsonTestFile2 = getFixturePath('test_file2.json');
-  jsonTestFile3 = getFixturePath('test_file3.json');
-  yamlTestFile4 = getFixturePath('test_file4.yml');
-  yamlTestFile5 = getFixturePath('test_file5.yml');
-  yamlTestFile6 = getFixturePath('test_file6.yml');
+  jsonTestFile1 = getFixturePath('file1.json');
+  jsonTestFile2 = getFixturePath('file2.json');
+  jsonTestFile3 = getFixturePath('file3.json');
+  yamlTestFile4 = getFixturePath('file4.yml');
+  yamlTestFile5 = getFixturePath('file5.yml');
+  yamlTestFile6 = getFixturePath('file6.yml');
 });
 
 test('both json.files have common and different data', () => {
@@ -27,7 +27,7 @@ test('both json.files have common and different data', () => {
 
 test('compare empty and non-empty json.files', () => {
   const result = jsonResult2;
-  expect(genDiff(jsonTestFile2, jsonTestFile3)).toEqual(result);
+  expect(genDiff(jsonTestFile1, jsonTestFile3)).toEqual(result);
 });
 
 test('compare two empty json.files', () => {
@@ -42,7 +42,7 @@ test('both yml.files have common and different data', () => {
 
 test('compare empty and non-empty yml.files', () => {
   const result = yamlResult5;
-  expect(genDiff(yamlTestFile5, yamlTestFile6)).toEqual(result);
+  expect(genDiff(yamlTestFile4, yamlTestFile6)).toEqual(result);
 });
 
 test('compare two empty yml.files', () => {
