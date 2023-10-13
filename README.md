@@ -10,5 +10,8 @@
 ## Gendiff
 <a href="https://asciinema.org/a/jh8T4soPa0mF7WCCMyiXQN4rC" target="_blank"><img src="https://asciinema.org/a/jh8T4soPa0mF7WCCMyiXQN4rC.svg" /></a>
 
-## Gendiff of recursive format
+## Gendiff of two recursive files with stylish output format
 <a href="https://asciinema.org/a/Mz4sGMS6udKJF59JmQhdZ43Kf" target="_blank"><img src="https://asciinema.org/a/Mz4sGMS6udKJF59JmQhdZ43Kf.svg" /></a>
+
+## Gendiff of two recursive files with plain output format
+<a href="https://asciinema.org/a/614113" target="_blank"><img src="https://asciinema.org/a/614113.svg" /></a>
