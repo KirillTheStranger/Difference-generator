@@ -7,7 +7,7 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
     const bracketIndent = replacer.repeat(indentSize - spacesCount + 2);
 
     const result = arr.map(({
-      key, type, value, value1, value2, children,
+      key, type, value1, value2, children,
     }) => {
       if (type === 'nested') {
         return `${currentIndent}  ${key}: ${iter(children, depth + 1)}`;
@@ -15,11 +15,11 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
 
       switch (type) {
         case 'removed':
-          return `${currentIndent}- ${key}: ${makeStrFromValue(value, depth)}`;
+          return `${currentIndent}- ${key}: ${makeStrFromValue(value1, depth)}`;
         case 'added':
-          return `${currentIndent}+ ${key}: ${makeStrFromValue(value, depth)}`;
+          return `${currentIndent}+ ${key}: ${makeStrFromValue(value2, depth)}`;
         case 'unchanged':
-          return `${currentIndent}  ${key}: ${makeStrFromValue(value, depth)}`;
+          return `${currentIndent}  ${key}: ${makeStrFromValue(value1, depth)}`;
         case 'updated':
           return `${currentIndent}- ${key}: ${makeStrFromValue(value1, depth)}\n${currentIndent}+ ${key}: ${makeStrFromValue(value2, depth)}`;
         default:

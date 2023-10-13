@@ -1,12 +1,12 @@
-//import { options } from '../../bin/gendiff.js';
 import stylish from './stylish.js';
+import plain from './plain.js';
 
-const chooseFormatter = (data) => {
+const chooseFormatterFrom = (data) => {
   if (data.format === 'plain') {
-    return plain();
+    return plain;
   }
 
-  return stylish();
+  return stylish;
 };
 
-export default chooseFormatter;
+export default chooseFormatterFrom;
