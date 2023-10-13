@@ -7,12 +7,7 @@ const parseYaml = (file) => yaml.load(file);
 
 const readFile = (filepath) => fs.readFileSync(filepath, 'utf8');
 const getFileExt = (filepath) => {
-  let extention;
-  if (filepath.includes('/')) {
-    extention = path.extname(filepath.split('/').at(-1));
-  } else {
-    extention = path.extname(filepath);
-  }
+  const extention = filepath.includes('/') ? path.extname(filepath.split('/').at(-1)) : path.extname(filepath);
   return extention;
 };
 
