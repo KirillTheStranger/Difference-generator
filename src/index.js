@@ -22,10 +22,10 @@ const genDiff = (filepath1, filepath2, formatName) => {
 
     const arrOfObjects = keys.map((key) => {
       if (!Object.hasOwn(file2, key)) {
-        return { key, type: 'removed', value: file1[key] };
+        return { key, type: 'removed', value1: file1[key] };
       }
       if (!Object.hasOwn(file1, key)) {
-        return { key, type: 'added', value: file2[key] };
+        return { key, type: 'added', value2: file2[key] };
       }
       if (typeof file1[key] === 'object' && typeof file2[key] === 'object') {
         return { key, type: 'nested', children: iter(file1[key], file2[key]) };
@@ -33,7 +33,7 @@ const genDiff = (filepath1, filepath2, formatName) => {
       if (
         Object.hasOwn(file1, key) && Object.hasOwn(file2, key) && _.isEqual(file1[key], file2[key])
       ) {
-        return { key, type: 'unchanged', value: file1[key] };
+        return { key, type: 'unchanged', value1: file1[key] };
       }
       if (
         Object.hasOwn(file1, key) && Object.hasOwn(file2, key) && !_.isEqual(file1[key], file2[key])
