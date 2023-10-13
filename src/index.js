@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import parseFromPath from './parsers.js';
-import stylish from './stylish.js';
+import chooseFormatterFrom from './formatters/index.js';
 
-const genDiff = (filepath1, filepath2) => {
+const genDiff = (filepath1, filepath2, formatName) => {
   const firstFile = parseFromPath(filepath1);
   const secondFile = parseFromPath(filepath2);
 
@@ -22,7 +22,7 @@ const genDiff = (filepath1, filepath2) => {
 
     const arrOfObjects = keys.map((key) => {
       if (!Object.hasOwn(file2, key)) {
-        return { key, type: 'deleted', value: file1[key] };
+        return { key, type: 'removed', value: file1[key] };
       }
       if (!Object.hasOwn(file1, key)) {
         return { key, type: 'added', value: file2[key] };
@@ -39,7 +39,7 @@ const genDiff = (filepath1, filepath2) => {
         Object.hasOwn(file1, key) && Object.hasOwn(file2, key) && !_.isEqual(file1[key], file2[key])
       ) {
         return {
-          key, type: 'changed', value1: file1[key], value2: file2[key],
+          key, type: 'updated', value1: file1[key], value2: file2[key],
         };
       }
       return {};
@@ -47,8 +47,11 @@ const genDiff = (filepath1, filepath2) => {
     return arrOfObjects;
   };
 
-  const resultedStr = stylish(iter(firstFile, secondFile));
-  return resultedStr;
+  const typedData = iter(firstFile, secondFile);
+  const formatter = chooseFormatterFrom(formatName);
+  const result = formatter(typedData);
+
+  return result;
 };
 
 export default genDiff;

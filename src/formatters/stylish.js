@@ -14,13 +14,13 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
       }
 
       switch (type) {
-        case 'deleted':
+        case 'removed':
           return `${currentIndent}- ${key}: ${makeStrFromValue(value, depth)}`;
         case 'added':
           return `${currentIndent}+ ${key}: ${makeStrFromValue(value, depth)}`;
         case 'unchanged':
           return `${currentIndent}  ${key}: ${makeStrFromValue(value, depth)}`;
-        case 'changed':
+        case 'updated':
           return `${currentIndent}- ${key}: ${makeStrFromValue(value1, depth)}\n${currentIndent}+ ${key}: ${makeStrFromValue(value2, depth)}`;
         default:
           return 'Default value';
