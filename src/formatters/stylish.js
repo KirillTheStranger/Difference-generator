@@ -1,4 +1,4 @@
-import { makeStrFromValue } from './helpers.js';
+import { makeStrFromValue } from '../helpers.js';
 
 const stylish = (array, replacer = ' ', spacesCount = 4) => {
   const iter = (arr, depth) => {
