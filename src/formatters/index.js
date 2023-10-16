@@ -14,13 +14,11 @@ const formatterSelector = (data) => {
     return json;
   }
 
-  if (format === 'stylish') {
-    return stylish;
-  }
-
   if (format !== 'json' && format !== 'plain' && format !== 'stylish') {
     throw new Error(`Uknown format: '${format}'`);
   }
+
+  return stylish;
 };
 
 export default formatterSelector;
