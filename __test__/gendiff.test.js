@@ -54,7 +54,7 @@ test('compare two empty yml.files, stylish format', () => {
   expect(genDiff(pathOfYamlTestFile6, pathOfYamlTestFile6, stylishFormat)).toEqual(result);
 });
 
-test('compare two empty yml.files, plain format', () => {
+test('compare two empty json.files, plain format', () => {
   const result = plainCompareTwoNonEmptyFiles;
   const pathOfJsonTestFile1 = getFixturePath('file1.json');
   const pathOfJsonTestFile2 = getFixturePath('file2.json');

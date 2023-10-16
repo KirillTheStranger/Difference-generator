@@ -9,16 +9,7 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const iter = (file1, file2) => {
     const keys1 = Object.keys(file1);
     const keys2 = Object.keys(file2);
-    const keys = _.union(keys1, keys2)
-      .sort((a, b) => {
-        if (a.toLowerCase() < b.toLowerCase()) {
-          return -1;
-        }
-        if (a.toLowerCase() > b.toLowerCase()) {
-          return 1;
-        }
-        return 0;
-      });
+    const keys = _.sortBy(_.union(keys1, keys2));
 
     const arrOfObjects = keys.map((key) => {
       if (!Object.hasOwn(file2, key)) {

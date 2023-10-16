@@ -15,16 +15,15 @@ const parseFromPath = (filepath) => {
   const fullPath = path.resolve(process.cwd(), filepath);
   const extention = getFileExt(fullPath);
 
-  let file;
   if (extention === '.json') {
-    file = parseJson(readFile(fullPath));
+    return parseJson(readFile(fullPath));
   }
 
   if (extention === '.yaml' || extention === '.yml') {
-    file = parseYaml(readFile(fullPath));
+    return parseYaml(readFile(fullPath));
   }
 
-  return file;
+  return null;
 };
 
 export default parseFromPath;
