@@ -3,24 +3,24 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const chooseFormatterFrom = (data) => {
-  if (_.isObject(data) && data.format === 'plain') {
+const formatterSelector = (data) => {
+  const format = _.isObject(data) ? data.format : data;
+
+  if (format === 'plain') {
     return plain;
   }
 
-  if (_.isObject(data) && data.format === 'json') {
+  if (format === 'json') {
     return json;
   }
 
-  if (data === 'plain') {
-    return plain;
+  if (format === 'stylish') {
+    return stylish;
   }
 
-  if (data === 'json') {
-    return json;
+  if (format !== 'json' && format !== 'plain' && format !== 'stylish') {
+    throw new Error(`Uknown format: '${format}'`);
   }
-
-  return stylish;
 };
 
-export default chooseFormatterFrom;
+export default formatterSelector;

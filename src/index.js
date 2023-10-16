@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import parseFromPath from './parsers.js';
-import chooseFormatterFrom from './formatters/index.js';
+import formatterSelector from './formatters/index.js';
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const firstFile = parseFromPath(filepath1);
@@ -48,7 +48,7 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   };
 
   const typedData = iter(firstFile, secondFile);
-  const formatter = chooseFormatterFrom(formatName);
+  const formatter = formatterSelector(formatName);
   const result = formatter(typedData);
 
   return result;
