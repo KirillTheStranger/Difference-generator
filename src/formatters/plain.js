@@ -5,7 +5,7 @@ const plain = (data) => {
     if (_.isObject(value)) {
       return '[complex value]';
     }
-    if (value === false || value === true || value === null || value === undefined) {
+    if (!value) {
       return `${value}`;
     }
     return `'${value}'`;
