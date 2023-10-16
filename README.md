@@ -7,6 +7,9 @@
 ## Gendiff
 The program compares two JSON or YML files with selected formatter and shows the difference in terminal.
 
+## Requirements
+Latest version of [Node.js](https://github.com/Hexlet/ru-instructions/blob/main/nodejs.md)
+
 ## Instalation
 ```bash
 make install-deps
