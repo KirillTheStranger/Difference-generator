@@ -1,4 +1,4 @@
-import { getFixturePath } from '../src/helpers.js';
+import getFixturePath from '../src/helpers.js';
 import genDiff from '../src/index.js';
 import { readFile } from '../src/parsers.js';
 
