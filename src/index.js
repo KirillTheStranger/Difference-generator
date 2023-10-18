@@ -1,44 +1,12 @@
-import _ from 'lodash';
 import { parseFromPath } from './parsers.js';
+import diffGenerator from './diffGenerator.js';
 import formatterSelector from './formatters/index.js';
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
-  const firstFile = parseFromPath(filepath1);
-  const secondFile = parseFromPath(filepath2);
+  const contentOfFile1 = parseFromPath(filepath1);
+  const contentOfFile2 = parseFromPath(filepath2);
 
-  const iter = (file1, file2) => {
-    const keys1 = Object.keys(file1);
-    const keys2 = Object.keys(file2);
-    const keys = _.sortBy(_.union(keys1, keys2));
-
-    const arrOfObjects = keys.map((key) => {
-      if (!Object.hasOwn(file2, key)) {
-        return { key, type: 'removed', value1: file1[key] };
-      }
-      if (!Object.hasOwn(file1, key)) {
-        return { key, type: 'added', value2: file2[key] };
-      }
-      if (typeof file1[key] === 'object' && typeof file2[key] === 'object') {
-        return { key, type: 'nested', children: iter(file1[key], file2[key]) };
-      }
-      if (
-        Object.hasOwn(file1, key) && Object.hasOwn(file2, key) && _.isEqual(file1[key], file2[key])
-      ) {
-        return { key, type: 'unchanged', value1: file1[key] };
-      }
-      if (
-        Object.hasOwn(file1, key) && Object.hasOwn(file2, key) && !_.isEqual(file1[key], file2[key])
-      ) {
-        return {
-          key, type: 'updated', value1: file1[key], value2: file2[key],
-        };
-      }
-      return {};
-    }, []);
-    return arrOfObjects;
-  };
-
-  const typedData = iter(firstFile, secondFile);
+  const typedData = diffGenerator(contentOfFile1, contentOfFile2);
   const formatter = formatterSelector(formatName);
   const result = formatter(typedData);
 
