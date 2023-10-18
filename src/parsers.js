@@ -16,15 +16,16 @@ const parseFromPath = (filepath) => {
   const fullPath = makePath(filepath);
   const extention = getFileExt(fullPath);
 
-  if (extention === '.json') {
-    return parseJson(readFile(fullPath));
+  switch (extention) {
+    case '.json':
+      return parseJson(readFile(fullPath));
+    case '.yaml':
+      return parseYaml(readFile(fullPath));
+    case '.yml':
+      return parseYaml(readFile(fullPath));
+    default:
+      throw new Error(`Unknown extantion: '${extention}'!`);
   }
-
-  if (extention === '.yaml' || extention === '.yml') {
-    return parseYaml(readFile(fullPath));
-  }
-
-  return null;
 };
 
 export { parseFromPath, readFile };
