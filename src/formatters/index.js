@@ -6,19 +6,16 @@ import json from './json.js';
 const formatterSelector = (data) => {
   const format = _.isObject(data) ? data.format : data;
 
-  if (format === 'plain') {
-    return plain;
+  switch (format) {
+    case 'stylish':
+      return stylish;
+    case 'plain':
+      return plain;
+    case 'json':
+      return json;
+    default:
+      throw new Error(`Uknown format: '${format}'`);
   }
-
-  if (format === 'json') {
-    return json;
-  }
-
-  if (format !== 'json' && format !== 'plain' && format !== 'stylish') {
-    throw new Error(`Uknown format: '${format}'`);
-  }
-
-  return stylish;
 };
 
 export default formatterSelector;
