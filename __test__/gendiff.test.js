@@ -13,7 +13,8 @@ test.each([
   ['file4.yml', 'file5.yml', 'plain', 'result_files/plainCompareTwoFilesWithData.txt'],
   ['file1.json', 'file2.json', 'json', 'result_files/jsonCompareTwoFilesWithData.txt'],
 ])('Compare %p and %p with %s format', (file1, file2, format, resultFile) => {
-  expect(genDiff(getFixturePath(file1), getFixturePath(file2), format)).toEqual(readFile(getFixturePath(resultFile)));
+  expect(genDiff(getFixturePath(file1), getFixturePath(file2), format))
+    .toEqual(readFile(getFixturePath(resultFile)));
 });
 
 test('Compare two files with unknown format', () => {
