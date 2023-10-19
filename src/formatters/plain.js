@@ -1,16 +1,16 @@
 import _ from 'lodash';
 
-const plain = (data) => {
-  const makeComplexValue = (value) => {
-    if (_.isObject(value)) {
-      return '[complex value]';
-    }
-    if (value === false || value === true || value === null || value === undefined || value === 0) {
-      return `${value}`;
-    }
-    return `'${value}'`;
-  };
+const makeComplexValue = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  if (value === false || value === true || value === null || value === undefined || value === 0) {
+    return `${value}`;
+  }
+  return `'${value}'`;
+};
 
+const plain = (data) => {
   const sliced = (str) => str.slice(1, str.length);
 
   const iter = (iterData, depthKey) => {
