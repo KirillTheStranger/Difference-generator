@@ -4,6 +4,7 @@ const diffGenerator = (content1, content2) => {
   const keys1 = Object.keys(content1);
   const keys2 = Object.keys(content2);
   const keys = _.sortBy(_.union(keys1, keys2));
+
   const typedData = keys.map((key) => {
     if (!Object.hasOwn(content2, key)) {
       return { key, type: 'removed', value1: content1[key] };
@@ -28,7 +29,7 @@ const diffGenerator = (content1, content2) => {
         key, type: 'updated', value1: content1[key], value2: content2[key],
       };
     }
-    return {};
+    throw new Error(`Unknown data`);
   }, []);
   return typedData;
 };
