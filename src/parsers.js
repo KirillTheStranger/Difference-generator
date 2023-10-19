@@ -2,8 +2,8 @@ import * as fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
 
-const parseJson = (file) => JSON.parse(file);
-const parseYaml = (file) => yaml.load(file);
+const parseJson = (filepath) => JSON.parse(readFile(filepath));
+const parseYaml = (filepath) => yaml.load(readFile(filepath));
 
 const makePath = (filepath) => path.resolve(process.cwd(), filepath);
 const readFile = (filepath) => fs.readFileSync(makePath(filepath), 'utf8');
@@ -18,11 +18,11 @@ const parseFromPath = (filepath) => {
 
   switch (extention) {
     case '.json':
-      return parseJson(readFile(fullPath));
+      return parseJson(fullPath);
     case '.yaml':
-      return parseYaml(readFile(fullPath));
+      return parseYaml(fullPath);
     case '.yml':
-      return parseYaml(readFile(fullPath));
+      return parseYaml(fullPath);
     default:
       throw new Error(`Unknown extantion: '${extention}'!`);
   }
