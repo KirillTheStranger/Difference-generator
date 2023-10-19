@@ -1,17 +1,25 @@
 import _ from 'lodash';
 
-const stringify = (value, currentDepth, replaceValue = ' ', replacesCount = 4) => {
-  const iter = (currentValue, depth) => {
+const getIndent = (depth, replaceValue, spaceCount) => {
+  const indentSize = (depth * spaceCount) - 2;
+  const currentIndent = replaceValue.repeat(indentSize);
+  const bracketIndent = replaceValue.repeat(indentSize - spaceCount + 2);
+  return [currentIndent, bracketIndent];
+};
+
+const stringify = (data, depth) => {
+  const iter = (currentValue, currentDepth, replaceValue = ' ', spaceCount = 4) => {
     if (!_.isObject(currentValue)) {
       return `${currentValue}`;
     }
 
-    const indentSize = (depth * replacesCount) + 4;
+    const indentSize = (currentDepth * spaceCount) + 4;
     const currentIndent = replaceValue.repeat(indentSize);
-    const bracketIndent = replaceValue.repeat(indentSize - replacesCount);
+    const bracketIndent = replaceValue.repeat(indentSize - spaceCount);
+
     const lines = Object
       .entries(currentValue)
-      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, currentDepth + 1)}`);
 
     return [
       '{',
@@ -20,23 +28,18 @@ const stringify = (value, currentDepth, replaceValue = ' ', replacesCount = 4) =
     ].join('\n');
   };
 
-  return iter(value, currentDepth);
+  return iter(data, depth);
 };
 
-const stylish = (array, replacer = ' ', spacesCount = 4) => {
-  const iter = (arr, depth) => {
-    const indentSize = (depth * spacesCount) - 2;
-    const currentIndent = replacer.repeat(indentSize);
-    const bracketIndent = replacer.repeat(indentSize - spacesCount + 2);
-
-    const result = arr.map(({
+const stylish = (data) => {
+  const iter = (iterData, depth, replaceValue = ' ', spacesCount = 4) => {
+    const [currentIndent, bracketIndent] = getIndent(depth, replaceValue, spacesCount);
+    const result = iterData.map(({
       key, type, value1, value2, children,
     }) => {
-      if (type === 'nested') {
-        return `${currentIndent}  ${key}: ${iter(children, depth + 1)}`;
-      }
-
       switch (type) {
+        case 'nested':
+          return `${currentIndent}  ${key}: ${iter(children, depth + 1)}`;
         case 'removed':
           return `${currentIndent}- ${key}: ${stringify(value1, depth)}`;
         case 'added':
@@ -46,7 +49,7 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
         case 'updated':
           return `${currentIndent}- ${key}: ${stringify(value1, depth)}\n${currentIndent}+ ${key}: ${stringify(value2, depth)}`;
         default:
-          return 'Default value';
+          throw new Error(`Uknown type: ${type}`);
       }
     });
     return [
@@ -55,7 +58,7 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
       `${bracketIndent}}`,
     ].join('\n');
   };
-  return iter(array, 1);
+  return iter(data, 1);
 };
 
 export default stylish;

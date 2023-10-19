@@ -14,22 +14,25 @@ const plain = (data) => {
   const sliced = (str) => str.slice(1, str.length);
 
   const iter = (iterData, depthKey) => {
-    const result = iterData.filter(({ type }) => type !== 'unchanged')
-      .flatMap(({
-        key, type, value1, value2, children,
-      }) => {
-        const curKeyName = `${depthKey}.${key}`;
-        if (type === 'nested') {
+    const result = iterData.flatMap(({
+      key, type, value1, value2, children,
+    }) => {
+      const curKeyName = `${depthKey}.${key}`;
+      switch (type) {
+        case 'added':
+          return `Property '${sliced(curKeyName)}' was added with value: ${makeComplexValue(value2)}`;
+        case 'nested':
           return iter(children, curKeyName);
-        }
-        if (type === 'updated') {
+        case 'updated':
           return `Property '${sliced(curKeyName)}' was updated. From ${makeComplexValue(value1)} to ${makeComplexValue(value2)}`;
-        }
-        if (type === 'removed') {
+        case 'removed':
           return `Property '${sliced(curKeyName)}' was removed`;
-        }
-        return `Property '${sliced(curKeyName)}' was added with value: ${makeComplexValue(value2)}`;
-      });
+        case 'unchanged':
+          return [];
+        default:
+          throw new Error(`Uknown type: ${type}`);
+      }
+    });
     return result.join('\n');
   };
   return iter(data, '');
