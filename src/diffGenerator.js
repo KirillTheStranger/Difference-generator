@@ -15,16 +15,11 @@ const diffGenerator = (content1, content2) => {
     if (typeof content1[key] === 'object' && typeof content2[key] === 'object') {
       return { key, type: 'nested', children: diffGenerator(content1[key], content2[key]) };
     }
-    if (
-      Object.hasOwn(content1, key) && Object.hasOwn(content2, key)
-        && _.isEqual(content1[key], content2[key])
+    if (_.isEqual(content1[key], content2[key])
     ) {
       return { key, type: 'unchanged', value1: content1[key] };
     }
-    if (
-      Object.hasOwn(content1, key) && Object.hasOwn(content2, key)
-        && !_.isEqual(content1[key], content2[key])
-    ) {
+    if (!_.isEqual(content1[key], content2[key])) {
       return {
         key, type: 'updated', value1: content1[key], value2: content2[key],
       };
