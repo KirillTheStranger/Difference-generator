@@ -29,7 +29,7 @@ const diffGenerator = (content1, content2) => {
         key, type: 'updated', value1: content1[key], value2: content2[key],
       };
     }
-    throw new Error(`Unknown data`);
+    throw new Error('Unknown data');
   }, []);
   return typedData;
 };
