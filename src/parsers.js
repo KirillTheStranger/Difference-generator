@@ -5,28 +5,25 @@ import yaml from 'js-yaml';
 const makePath = (filepath) => path.resolve(process.cwd(), filepath);
 const readFile = (filepath) => fs.readFileSync(makePath(filepath), 'utf8');
 
-const parseJson = (filepath) => JSON.parse(readFile(filepath));
-const parseYaml = (filepath) => yaml.load(readFile(filepath));
+const parseJson = (data) => JSON.parse(data);
+const parseYaml = (data) => yaml.load(data);
 
 const getFileExt = (filepath) => {
   const extention = filepath.includes('/') ? path.extname(filepath.split('/').at(-1)) : path.extname(filepath);
   return extention;
 };
 
-const parseFromPath = (filepath) => {
-  const fullPath = makePath(filepath);
-  const extention = getFileExt(fullPath);
-
+const parseFromPath = (data, extention) => {
   switch (extention) {
     case '.json':
-      return parseJson(fullPath);
+      return parseJson(data);
     case '.yaml':
-      return parseYaml(fullPath);
+      return parseYaml(data);
     case '.yml':
-      return parseYaml(fullPath);
+      return parseYaml(data);
     default:
       throw new Error(`Unknown extantion: '${extention}'!`);
   }
 };
 
-export { parseFromPath, readFile };
+export { parseFromPath, readFile, getFileExt };

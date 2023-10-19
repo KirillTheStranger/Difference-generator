@@ -1,10 +1,12 @@
-import { parseFromPath } from './parsers.js';
+import { parseFromPath, readFile, getFileExt } from './parsers.js';
 import diffGenerator from './diffGenerator.js';
 import formatterSelector from './formatters/index.js';
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
-  const contentOfFile1 = parseFromPath(filepath1);
-  const contentOfFile2 = parseFromPath(filepath2);
+  const [data1, extantion1] = [readFile(filepath1), getFileExt(filepath1)];
+  const [data2, extantion2] = [readFile(filepath2), getFileExt(filepath2)];
+  const contentOfFile1 = parseFromPath(data1, extantion1);
+  const contentOfFile2 = parseFromPath(data2, extantion2);
 
   const typedData = diffGenerator(contentOfFile1, contentOfFile2);
   const formatter = formatterSelector(formatName);
