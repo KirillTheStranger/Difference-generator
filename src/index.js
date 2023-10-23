@@ -1,6 +1,12 @@
-import { parseFromPath, readFile, getFileExt } from './parsers.js';
+import * as fs from 'node:fs';
+import path from 'node:path';
+import parseFromPath from './parsers.js';
 import calculateDiff from './calculateDiff.js';
 import formatData from './formatters/index.js';
+
+const getFileExt = (filepath) => path.extname(filepath).slice(1);
+const makePath = (filepath) => path.resolve(process.cwd(), filepath);
+const readFile = (filepath) => fs.readFileSync(makePath(filepath), 'utf8');
 
 const getData = (filepath) => {
   const extension = getFileExt(filepath);
@@ -19,4 +25,4 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   return result;
 };
 
-export default genDiff;
+export { genDiff, readFile };
