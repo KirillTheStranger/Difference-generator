@@ -1,11 +1,13 @@
 import _ from 'lodash';
 
-const getIndent = (depth, replaceValue, spaceCount) => {
-  const indentSize = (depth * spaceCount) - 2;
-  const currentIndent = replaceValue.repeat(indentSize);
-  const bracketIndent = replaceValue.repeat(indentSize - spaceCount + 2);
-  return [currentIndent, bracketIndent];
-};
+// const getIndent = (depth, replaceValue, spaceCount) => {
+//   const indentSize = (depth * spaceCount) - 2;
+//   const currentIndent = replaceValue.repeat(indentSize);
+//   const bracketIndent = replaceValue.repeat(indentSize - spaceCount + 2);
+//   return [currentIndent, bracketIndent];
+// };
+
+const getIndent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
 
 const stringify = (data, depth) => {
   const iter = (currentValue, currentDepth, replaceValue = ' ', spaceCount = 4) => {
@@ -13,13 +15,15 @@ const stringify = (data, depth) => {
       return `${currentValue}`;
     }
 
-    const indentSize = (currentDepth * spaceCount) + 4;
-    const currentIndent = replaceValue.repeat(indentSize);
-    const bracketIndent = replaceValue.repeat(indentSize - spaceCount);
+    // const indentSize = (currentDepth * spaceCount) + 4;
+    // const currentIndent = replaceValue.repeat(indentSize);
+    // const bracketIndent = replaceValue.repeat(indentSize - spaceCount);
+    const currentIndent = getIndent(currentDepth);
+    const bracketIndent = getIndent(currentDepth);
 
     const lines = Object
       .entries(currentValue)
-      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, currentDepth + 1)}`);
+      .map(([key, val]) => `${currentIndent}      ${key}: ${iter(val, currentDepth + 1)}`);
 
     return [
       '{',
@@ -33,7 +37,9 @@ const stringify = (data, depth) => {
 
 const stylish = (data) => {
   const iter = (iterData, depth, replaceValue = ' ', spacesCount = 4) => {
-    const [currentIndent, bracketIndent] = getIndent(depth, replaceValue, spacesCount);
+    const currentIndent = getIndent(depth);
+    const bracketIndent = getIndent(depth);
+    // const [currentIndent, bracketIndent] = getIndent(depth, replaceValue, spacesCount);
     const result = iterData.map(({
       key, type, value1, value2, children,
     }) => {
