@@ -13,7 +13,7 @@ const calculateDiff = (content1, content2) => {
       return { key, type: 'added', value2: content2[key] };
     }
     if (typeof content1[key] === 'object' && typeof content2[key] === 'object') {
-      return { key, type: 'nested', children: diffGenerator(content1[key], content2[key]) };
+      return { key, type: 'nested', children: calculateDiff(content1[key], content2[key]) };
     }
     if (_.isEqual(content1[key], content2[key])
     ) {
