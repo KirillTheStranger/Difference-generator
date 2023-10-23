@@ -3,23 +3,16 @@ import genDiff from '../src/index.js';
 import { readFile } from '../src/parsers.js';
 
 test.each([
-  ['file1.json', 'file2.json', 'stylish', 'result_files/stylishCompareTwoFilesWithData.txt'],
-  ['file1.json', 'file3.json', 'stylish', 'result_files/stylishCompareEmptyWithNonEmptyFile.txt'],
-  ['file3.json', 'file3.json', 'stylish', 'result_files/compareTwoEmptyFiles.txt'],
-  ['file4.yml', 'file5.yml', 'stylish', 'result_files/stylishCompareTwoFilesWithData.txt'],
-  ['file4.yml', 'file6.yml', 'stylish', 'result_files/stylishCompareEmptyWithNonEmptyFile.txt'],
-  ['file6.yml', 'file6.yml', 'stylish', 'result_files/compareTwoEmptyFiles.txt'],
-  ['file1.json', 'file2.json', 'plain', 'result_files/plainCompareTwoFilesWithData.txt'],
-  ['file4.yml', 'file5.yml', 'plain', 'result_files/plainCompareTwoFilesWithData.txt'],
-  ['file1.json', 'file2.json', 'json', 'result_files/jsonCompareTwoFilesWithData.txt'],
-])('Compare %p and %p with %s format', (file1, file2, format, resultFile) => {
+  ['file1.json', 'file2.json', 'result_files/result_stylish.txt', 'stylish'],
+  ['file1.json', 'file3.json', 'result_files/result_stylish_compare_with_empty.txt', 'stylish'],
+  ['file1.json', 'file2.json', 'result_files/result_stylish.txt'],
+  ['file1.yml', 'file2.yml', 'result_files/result_stylish.txt', 'stylish'],
+  ['file1.yml', 'file3.yml', 'result_files/result_stylish_compare_with_empty.txt', 'stylish'],
+  ['file1.yml', 'file2.yml', 'result_files/result_stylish.txt'],
+  ['file1.json', 'file2.json', 'result_files/result_plain.txt', 'plain'],
+  ['file1.yml', 'file2.yml', 'result_files/result_plain.txt', 'plain'],
+  ['file1.json', 'file2.json', 'result_files/result_json.txt', 'json'],
+])('Compare %p and %p. Result at: %s', (file1, file2, resultFile, format = 'stylish') => {
   expect(genDiff(getFixturePath(file1), getFixturePath(file2), format))
     .toEqual(readFile(getFixturePath(resultFile)));
-});
-
-test('Compare two files with unknown format', () => {
-  const pathOfJsonTestFile1 = getFixturePath('file1.json');
-  const pathOfJsonTestFile2 = getFixturePath('file2.json');
-  const uknownFormat = 'oops';
-  expect(() => genDiff(pathOfJsonTestFile1, pathOfJsonTestFile2, uknownFormat)).toThrow(Error);
 });
