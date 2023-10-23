@@ -1,6 +1,6 @@
 import { parseFromPath, readFile, getFileExt } from './parsers.js';
-import diffGenerator from './diffGenerator.js';
-import formatter from './formatters/index.js';
+import calculateDiff from './calculateDiff.js';
+import formatData from './formatters/index.js';
 
 const getData = (filepath) => {
   const extension = getFileExt(filepath);
@@ -13,8 +13,8 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const data1 = getData(filepath1);
   const data2 = getData(filepath2);
 
-  const typedData = diffGenerator(data1, data2);
-  const result = formatter(typedData, formatName);
+  const typedData = calculateDiff(data1, data2);
+  const result = formatData(typedData, formatName);
 
   return result;
 };
