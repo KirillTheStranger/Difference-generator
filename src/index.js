@@ -25,4 +25,6 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   return result;
 };
 
-export { genDiff, readFile };
+export default genDiff;
+
+export { readFile };

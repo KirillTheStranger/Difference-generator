@@ -1,5 +1,5 @@
 import getFixturePath from '../src/helpers.js';
-import { genDiff, readFile } from '../src/index.js';
+import genDiff, { readFile } from '../src/index.js';
 
 test.each([
   ['file1.json', 'file2.json', 'result_files/result_stylish.txt', 'stylish'],
