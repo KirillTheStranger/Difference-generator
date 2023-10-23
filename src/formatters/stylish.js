@@ -9,7 +9,7 @@ const stringify = (data, depth) => {
     }
 
     const currentIndent = getIndent(currentDepth);
-    const bracketIndent = getIndent(currentDepth + 0.5);
+    const bracketIndent = getIndent(currentDepth);
 
     const lines = Object
       .entries(currentValue)
@@ -18,7 +18,7 @@ const stringify = (data, depth) => {
     return [
       '{',
       ...lines,
-      `${bracketIndent}}`,
+      `${bracketIndent}  }`,
     ].join('\n');
   };
 
@@ -30,22 +30,20 @@ const stylish = (data) => {
     const currentIndent = getIndent(depth);
     const bracketIndent = getIndent(depth - 0.5);
 
-    const result = iterData.map(({
-      key, type, value, value1, value2, children,
-    }) => {
-      switch (type) {
+    const result = iterData.map((content) => {
+      switch (content.type) {
         case 'nested':
-          return `${currentIndent}  ${key}: ${iter(children, depth + 1)}`;
+          return `${currentIndent}  ${content.key}: ${iter(content.children, depth + 1)}`;
         case 'removed':
-          return `${currentIndent}- ${key}: ${stringify(value, depth)}`;
+          return `${currentIndent}- ${content.key}: ${stringify(content.value, depth)}`;
         case 'added':
-          return `${currentIndent}+ ${key}: ${stringify(value, depth)}`;
+          return `${currentIndent}+ ${content.key}: ${stringify(content.value, depth)}`;
         case 'unchanged':
-          return `${currentIndent}  ${key}: ${stringify(value, depth)}`;
+          return `${currentIndent}  ${content.key}: ${stringify(content.value, depth)}`;
         case 'updated':
-          return `${currentIndent}- ${key}: ${stringify(value1, depth)}\n${currentIndent}+ ${key}: ${stringify(value2, depth)}`;
+          return `${currentIndent}- ${content.key}: ${stringify(content.value1, depth)}\n${currentIndent}+ ${content.key}: ${stringify(content.value2, depth)}`;
         default:
-          throw new Error(`Uknown type: ${type}`);
+          throw new Error(`Uknown type: ${content.type}`);
       }
     });
     return [

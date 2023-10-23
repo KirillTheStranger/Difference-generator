@@ -14,23 +14,21 @@ const plain = (data) => {
   const sliced = (str) => str.slice(1, str.length);
 
   const iter = (iterData, depthKey) => {
-    const result = iterData.flatMap(({
-      key, type, value, value1, value2, children,
-    }) => {
-      const curKeyName = `${depthKey}.${key}`;
-      switch (type) {
+    const result = iterData.flatMap((content) => {
+      const curKeyName = `${depthKey}.${content.key}`;
+      switch (content.type) {
         case 'added':
-          return `Property '${sliced(curKeyName)}' was added with value: ${stringify(value)}`;
+          return `Property '${sliced(curKeyName)}' was added with value: ${stringify(content.value)}`;
         case 'nested':
-          return iter(children, curKeyName);
+          return iter(content.children, curKeyName);
         case 'updated':
-          return `Property '${sliced(curKeyName)}' was updated. From ${stringify(value1)} to ${stringify(value2)}`;
+          return `Property '${sliced(curKeyName)}' was updated. From ${stringify(content.value1)} to ${stringify(content.value2)}`;
         case 'removed':
           return `Property '${sliced(curKeyName)}' was removed`;
         case 'unchanged':
           return null;
         default:
-          throw new Error(`Uknown type: ${type}`);
+          throw new Error(`Uknown type: ${content.type}`);
       }
     })
       .filter((string) => string !== null);
