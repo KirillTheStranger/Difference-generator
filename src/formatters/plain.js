@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const makeComplexValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
@@ -20,11 +20,11 @@ const plain = (data) => {
       const curKeyName = `${depthKey}.${key}`;
       switch (type) {
         case 'added':
-          return `Property '${sliced(curKeyName)}' was added with value: ${makeComplexValue(value2)}`;
+          return `Property '${sliced(curKeyName)}' was added with value: ${stringify(value2)}`;
         case 'nested':
           return iter(children, curKeyName);
         case 'updated':
-          return `Property '${sliced(curKeyName)}' was updated. From ${makeComplexValue(value1)} to ${makeComplexValue(value2)}`;
+          return `Property '${sliced(curKeyName)}' was updated. From ${stringify(value1)} to ${stringify(value2)}`;
         case 'removed':
           return `Property '${sliced(curKeyName)}' was removed`;
         case 'unchanged':
