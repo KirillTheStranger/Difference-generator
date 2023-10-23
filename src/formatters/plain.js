@@ -28,11 +28,12 @@ const plain = (data) => {
         case 'removed':
           return `Property '${sliced(curKeyName)}' was removed`;
         case 'unchanged':
-          return [];
+          return null;
         default:
           throw new Error(`Uknown type: ${type}`);
       }
-    });
+    })
+      .filter((string) => string !== null);
     return result.join('\n');
   };
   return iter(data, '');
