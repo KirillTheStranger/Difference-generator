@@ -15,12 +15,12 @@ const plain = (data) => {
 
   const iter = (iterData, depthKey) => {
     const result = iterData.flatMap(({
-      key, type, value1, value2, children,
+      key, type, value, value1, value2, children,
     }) => {
       const curKeyName = `${depthKey}.${key}`;
       switch (type) {
         case 'added':
-          return `Property '${sliced(curKeyName)}' was added with value: ${stringify(value2)}`;
+          return `Property '${sliced(curKeyName)}' was added with value: ${stringify(value)}`;
         case 'nested':
           return iter(children, curKeyName);
         case 'updated':

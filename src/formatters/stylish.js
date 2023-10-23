@@ -31,17 +31,17 @@ const stylish = (data) => {
     const bracketIndent = getIndent(depth - 0.5);
 
     const result = iterData.map(({
-      key, type, value1, value2, children,
+      key, type, value, value1, value2, children,
     }) => {
       switch (type) {
         case 'nested':
           return `${currentIndent}  ${key}: ${iter(children, depth + 1)}`;
         case 'removed':
-          return `${currentIndent}- ${key}: ${stringify(value1, depth)}`;
+          return `${currentIndent}- ${key}: ${stringify(value, depth)}`;
         case 'added':
-          return `${currentIndent}+ ${key}: ${stringify(value2, depth)}`;
+          return `${currentIndent}+ ${key}: ${stringify(value, depth)}`;
         case 'unchanged':
-          return `${currentIndent}  ${key}: ${stringify(value1, depth)}`;
+          return `${currentIndent}  ${key}: ${stringify(value, depth)}`;
         case 'updated':
           return `${currentIndent}- ${key}: ${stringify(value1, depth)}\n${currentIndent}+ ${key}: ${stringify(value2, depth)}`;
         default:
