@@ -12,7 +12,7 @@ const calculateDiff = (content1, content2) => {
     if (!Object.hasOwn(content1, key)) {
       return { key, type: 'added', value2: content2[key] };
     }
-    if (typeof content1[key] === 'object' && typeof content2[key] === 'object') {
+    if (_.isPlainObject(content1[key]) && _.isPlainObject(content2[key])) {
       return { key, type: 'nested', children: calculateDiff(content1[key], content2[key]) };
     }
     if (_.isEqual(content1[key], content2[key])
