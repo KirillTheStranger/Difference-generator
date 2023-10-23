@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 import path from 'node:path';
-import parseFromPath from './parsers.js';
+import parseData from './parsers.js';
 import calculateDiff from './calculateDiff.js';
 import formatData from './formatters/index.js';
 
@@ -11,7 +11,7 @@ const readFile = (filepath) => fs.readFileSync(makePath(filepath), 'utf8');
 const getData = (filepath) => {
   const extension = getFileExt(filepath);
   const content = readFile(filepath);
-  const data = parseFromPath(content, extension);
+  const data = parseData(content, extension);
   return data;
 };
 
