@@ -14,7 +14,7 @@ const plain = (data) => {
   const sliced = (str) => str.slice(1, str.length);
 
   const iter = (iterData, depthKey) => {
-    const result = iterData.flatMap((content) => {
+    const result = iterData.map((content) => {
       const curKeyName = `${depthKey}.${content.key}`;
       switch (content.type) {
         case 'added':
