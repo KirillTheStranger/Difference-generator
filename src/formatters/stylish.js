@@ -28,12 +28,12 @@ const stringify = (data, depth) => {
 const stylish = (data) => {
   const iter = (iterData, depth) => {
     const currentIndent = getIndent(depth);
-    const bracketIndent = getIndent(depth - 0.5);
+    const bracketIndent = getIndent(depth);
 
     const result = iterData.map((content) => {
       switch (content.type) {
         case 'nested':
-          return `${currentIndent}  ${content.key}: ${iter(content.children, depth + 1)}`;
+          return `${currentIndent}  ${content.key}: {\n${iter(content.children, depth + 1)}\n${bracketIndent}  }`;
         case 'removed':
           return `${currentIndent}- ${content.key}: ${stringify(content.value, depth)}`;
         case 'added':
@@ -46,13 +46,9 @@ const stylish = (data) => {
           throw new Error(`Uknown type: ${content.type}`);
       }
     });
-    return [
-      '{',
-      ...result,
-      `${bracketIndent}}`,
-    ].join('\n');
+    return result.join('\n');
   };
-  return iter(data, 1);
+  return ['{', iter(data, 1), '}'].join('\n');
 };
 
 export default stylish;
