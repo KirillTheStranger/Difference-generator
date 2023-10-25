@@ -19,8 +19,8 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const data1 = getData(filepath1);
   const data2 = getData(filepath2);
 
-  const typedData = calculateDiff(data1, data2);
-  const result = formatData(typedData, formatName);
+  const differenceTree = calculateDiff(data1, data2);
+  const result = formatData(differenceTree, formatName);
 
   return result;
 };
