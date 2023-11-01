@@ -1,4 +1,4 @@
-# Gendiff - compare programm
+# Gendiff - program of data compare
 
 ### Tests and linter status:
 
